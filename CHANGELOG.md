@@ -2,6 +2,12 @@
 
 All notable changes to **kinetic-scroll** are documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- A 0.45 second opposite-direction lock after auto-stopping at the top or bottom boundary.
+
 ## [1.0.0]
 
 ### Added

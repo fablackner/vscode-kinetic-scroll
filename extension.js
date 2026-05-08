@@ -4,6 +4,7 @@ const DIRECTION = {
   UP: "up",
   DOWN: "down"
 };
+const BOUNDARY_OPPOSITE_DIRECTION_LOCK_MS = 450;
 
 class KineticScroller {
   constructor() {
@@ -12,6 +13,8 @@ class KineticScroller {
     this.scrollLinesPerTrigger = null;
     this.triggerFrequencyMs = null;
     this.isScrollTickInProgress = false;
+    this.temporarilyBlockedDirection = null;
+    this.temporarilyBlockedDirectionUntil = 0;
     this.disposables = [];
 
     this.resetRuntimeScrollValues();
@@ -66,13 +69,36 @@ class KineticScroller {
     );
   }
 
+  getOppositeDirection(direction) {
+    return direction === DIRECTION.UP ? DIRECTION.DOWN : DIRECTION.UP;
+  }
+
+  setBoundaryOppositeDirectionLock(boundaryDirection) {
+    this.temporarilyBlockedDirection = this.getOppositeDirection(boundaryDirection);
+    this.temporarilyBlockedDirectionUntil = Date.now() + BOUNDARY_OPPOSITE_DIRECTION_LOCK_MS;
+  }
+
+  isDirectionTemporarilyBlocked(direction) {
+    if (Date.now() >= this.temporarilyBlockedDirectionUntil) {
+      this.temporarilyBlockedDirection = null;
+      this.temporarilyBlockedDirectionUntil = 0;
+      return false;
+    }
+
+    return this.temporarilyBlockedDirection === direction;
+  }
+
   async runScrollTick(direction) {
     if (this.isScrollTickInProgress) {
       return;
     }
 
     const activeTextEditor = vscode.window.activeTextEditor;
-    if (!activeTextEditor || this.isAtBoundary(activeTextEditor, direction)) {
+    const reachedBoundaryBeforeScroll = activeTextEditor && this.isAtBoundary(activeTextEditor, direction);
+    if (!activeTextEditor || reachedBoundaryBeforeScroll) {
+      if (reachedBoundaryBeforeScroll) {
+        this.setBoundaryOppositeDirectionLock(direction);
+      }
       this.stopScrolling();
       return;
     }
@@ -81,8 +107,13 @@ class KineticScroller {
     try {
       await this.runScroll(direction);
       const latestActiveTextEditor = vscode.window.activeTextEditor;
+      const reachedBoundaryAfterScroll =
+        latestActiveTextEditor && this.isAtBoundary(latestActiveTextEditor, direction);
 
-      if (!latestActiveTextEditor || this.isAtBoundary(latestActiveTextEditor, direction)) {
+      if (!latestActiveTextEditor || reachedBoundaryAfterScroll) {
+        if (reachedBoundaryAfterScroll) {
+          this.setBoundaryOppositeDirectionLock(direction);
+        }
         this.stopScrolling();
       }
     } finally {
@@ -116,6 +147,10 @@ class KineticScroller {
   }
 
   startScrolling(direction) {
+    if (!this.scrollInterval && this.isDirectionTemporarilyBlocked(direction)) {
+      return;
+    }
+
     if (this.scrollInterval) {
       if (this.lastScrollDirection !== direction) {
         this.stopScrolling();

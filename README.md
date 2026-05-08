@@ -22,6 +22,7 @@ When scrolling is active:
 - **Brake/Stop:** Pressing the opposite direction's keybinding arrests the movement immediately.
 - **Halt:** `kineticScroll.stopKineticScrolling` halts movement regardless of the current vector.
 - **Boundary Stop:** Scrolling stops automatically when the editor reaches the full top or full bottom.
+- **Boundary Direction Lock:** After a boundary stop, starting sustained scroll in the opposite direction is blocked for `0.45` seconds.
 - **Re-anchor Cursor:** `kineticScroll.placeCursorMiddle` stops kinetic scrolling (if active) and moves the cursor to the middle of the current viewport. Use this when scrolling has moved the viewport away from the cursor.
 
 ## Configuration Setup
