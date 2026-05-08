@@ -3,7 +3,7 @@
   "displayName": "Kinetic Scroll",
   "description": "Start sustained scrolling with one keypress; opposite direction stops, same direction speeds up.",
   "publisher": "fablackner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
