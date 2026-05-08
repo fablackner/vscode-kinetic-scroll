@@ -1,0 +1,75 @@
+{
+  "name": "kinetic-scroll",
+  "displayName": "Kinetic Scroll",
+  "description": "Start sustained scrolling with one keypress; opposite direction stops, same direction speeds up.",
+  "publisher": "fablackner",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fablackner/kinetic-scroll.git"
+  },
+  "engines": {
+    "vscode": "^1.81.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "autoscroll",
+    "continuous",
+    "scroll",
+    "teleprompter",
+    "momentum"
+  ],
+  "main": "./extension.js",
+  "files": [
+    "extension.js",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "kineticScroll.startKineticScrollDown",
+        "title": "Start kinetic scroll down"
+      },
+      {
+        "command": "kineticScroll.startKineticScrollUp",
+        "title": "Start kinetic scroll up"
+      },
+      {
+        "command": "kineticScroll.stopKineticScrolling",
+        "title": "Stop kinetic scrolling"
+      },
+      {
+        "command": "kineticScroll.placeCursorMiddle",
+        "title": "Place cursor in middle of viewport"
+      }
+    ],
+    "configuration": {
+      "title": "kinetic-scroll",
+      "properties": {
+        "kineticScroll.triggerFrequencyMs": {
+          "type": "number",
+          "default": 16,
+          "minimum": 1,
+          "description": "Delay in milliseconds between scroll triggers while kinetic scrolling is active. This usually does not need to be changed."
+        },
+        "kineticScroll.initialScrollLinesPerTrigger": {
+          "type": "number",
+          "default": 2,
+          "minimum": 1,
+          "description": "Starting number of wrapped lines moved on each trigger."
+        },
+        "kineticScroll.accelerationStepLines": {
+          "type": "number",
+          "default": 2,
+          "minimum": 1,
+          "description": "When you run the same start command again, this many lines are added to each trigger."
+        }
+      }
+    }
+  }
+}
