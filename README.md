@@ -1,5 +1,7 @@
 # kinetic-scroll
 
+![Kinetic Scroll logo](images/kinetic-scroll-logo.png)
+
 `kinetic-scroll` enables sustained, hands-free viewport scrolling triggered by a single keypress, with dynamic velocity control.
 
 Press a designated key to initiate continuous scrolling. 

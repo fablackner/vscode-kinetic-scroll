@@ -23,8 +23,10 @@
     "momentum"
   ],
   "main": "./extension.js",
+  "icon": "images/kinetic-scroll-logo.png",
   "files": [
     "extension.js",
+    "images/kinetic-scroll-logo.png",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"
