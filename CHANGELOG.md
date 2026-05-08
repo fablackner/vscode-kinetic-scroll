@@ -4,6 +4,12 @@ All notable changes to **kinetic-scroll** are documented in this file.
 
 ## [Unreleased]
 
+## [1.0.2]
+
+### Changed
+
+- Updated the repository URL metadata to `https://github.com/fablackner/vscode-kinetic-scroll.git`.
+
 ## [1.0.1]
 
 ### Added

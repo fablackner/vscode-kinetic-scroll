@@ -3,11 +3,11 @@
   "displayName": "Kinetic Scroll",
   "description": "Start sustained scrolling with one keypress; opposite direction stops, same direction speeds up.",
   "publisher": "fablackner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fablackner/kinetic-scroll.git"
+    "url": "https://github.com/fablackner/vscode-kinetic-scroll.git"
   },
   "engines": {
     "vscode": "^1.81.0"
